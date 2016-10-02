@@ -44,6 +44,8 @@ setMethod("getUniprotSummary","gene", function(x,y){
         if (y@gene %in% l || x@name %in% l){
             x@uniprot_summary = strsplit(j[which(cols[[1]]=="comment(FUNCTION)")],"FUNCTION: ")[[1]]
             x@uniprot_protein_name = j[which(cols[[1]]=="protein names")]
+            x@uniprot_organism =  j[which(cols[[1]]=="organism")]
+            x@uniprot_length =  j[which(cols[[1]]=="length")]
             x@uniprot_name = j[which(cols[[1]]=="genes")]
         }
     }

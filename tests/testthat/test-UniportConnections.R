@@ -13,4 +13,6 @@ test_that("Gets from Uniprot database",{
   p <- getUniprotSummary(g,f)
 #  expect_equal_to_reference(p,"uniprot_test_gene.rds")
   expect_equal(p@uniprot_name,"BRAF BRAF1 RAFB1")
+  expect_equal(p@uniprot_length,"766")
+  expect_equal(p@uniprot_organism,"Homo sapiens (Human)")
 })

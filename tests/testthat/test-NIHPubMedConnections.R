@@ -21,16 +21,20 @@ test_that("Gets from NCBI PubMed using PMID",{
   a <- xmlParse(GET(query))
   expect_equal_to_reference(a,"ncbi_test_pubmed.rds")
   expect_equal(unlist(xpathApply(xmlClone(a),"//Item[@Name='Source']",xmlValue)),"AIDS Res Ther")
+  expect_equal(unlist(xpathApply(xmlClone(a),"//Item[@Name='pmc']",xmlValue)),"PMC2698819")
+  expect_equal(unlist(xpathApply(xmlClone(a),"//Item[@Name='LastAuthor']",xmlValue)),"Fielder MD")
 })
 
 test_that("Gets from NCBI PubMed using Text Search",{
 #  testthat::skip("Pubmed Test Search skip")
   testthat::skip_on_cran()
-  y <- getNihQuery(query(),"pubmed",gsub(" ","+","Thompson IR[Author] HIV"))
+  y <- getNihQuery(query(),"pubmed",gsub(" ","+","Thompson IR[Author] AND HIV"))
   query <- sprintf("%sesummary.fcgi?db=%s&query_key=%s&WebEnv=%s",y@nihbase,y@db,y@querykey,y@webenv)
   a <- xmlParse(GET(query))
   expect_equal_to_reference(a,"ncbi_test_pubmed2.rds")
   expect_equal(unlist(xpathApply(xmlClone(a),"//Item[@Name='Source']",xmlValue)),"AIDS Res Ther")
+  expect_equal(unlist(xpathApply(xmlClone(a),"//Item[@Name='doi']",xmlValue)),"10.1186/1742-6405-6-9")
+  expect_equal(unlist(xpathApply(xmlClone(a),"//Item[@Name='Pages']",xmlValue)),"9")
 })
 
 
