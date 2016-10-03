@@ -83,10 +83,13 @@ pubmed <- setClass("pubmed",
            Date ="character",
            Title ="character",
            Id ="character",
+           pmlink ="character",
+           pmclink ="character",
            Authors = "vector",
            Volume="character",
            Issue ="character",
            Pages ="character",
+           DOILink ="character",
            DOI ="character"
          ),
          prototype=list(

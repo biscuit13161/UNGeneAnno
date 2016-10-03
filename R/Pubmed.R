@@ -35,6 +35,8 @@ setMethod("getPublicationList","character", function(query){
       #print(i)
       z <- pubmed()
       z@Id <- unlist(xpathApply(xmlClone(j[[i]]),"//Id",xmlValue))
+      z@pmlink <- sprintf("https://www.ncbi.nlm.nih.gov/pubmed/?term=%s",z@Id)
+      z@pmclink <- sprintf("https://www.ncbi.nlm.nih.gov/pmc/articles/pmid/%s/",z@Id)
       z@Journal <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='Source']",xmlValue))
       z@Date <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='PubDate']",xmlValue))
       z@Authors <- ifelse(xpathApply(xmlClone(j[[i]]),"//Item[@Name='AuthorList']",xmlValue) == "","",xpathApply(xmlClone(j[[i]]),"//Item[@Name='AuthorList']/Item[@Name='Author']",xmlValue) )
@@ -44,12 +46,14 @@ setMethod("getPublicationList","character", function(query){
       z@Pages <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='Pages']",xmlValue))
       a <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='DOI']",xmlValue))
       z@DOI <- ifelse(is.null(a),"",a)
+      z@DOILink <- ifelse(is.null(a),"",sprintf("https://dx.doi.org/%s",a))
       v <- append(v,z)
     }
   }
   return(v)
 }
 )
+
 
 
 #' Carry out Pubmed search for a mtrix
