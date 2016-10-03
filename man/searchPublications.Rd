@@ -4,7 +4,7 @@
 \name{searchPublications}
 \alias{searchPublications}
 \alias{searchPublications,matrix-method}
-\title{Carry out Pubmed search for a mtrix}
+\title{Carry out Pubmed search for a matrix}
 \usage{
 searchPublications(query)
 

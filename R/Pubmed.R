@@ -56,7 +56,7 @@ setMethod("getPublicationList","character", function(query){
 
 
 
-#' Carry out Pubmed search for a mtrix
+#' Carry out Pubmed search for a matrix
 #'
 #' \code{searchPublications} carries out a series of Pubmed searches for each row of information in the given matrix.
 #' The function uses the same matrix used for input to the \code{getUniqueGeneList} function, however
