@@ -57,6 +57,7 @@ query <- setClass("query",
         webenv="character",
         querykey="character",
         gene="character",
+        notfound = "character",
         col="character"
     ),
     prototype=list(

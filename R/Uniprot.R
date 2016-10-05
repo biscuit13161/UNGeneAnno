@@ -33,7 +33,7 @@ setGeneric("getUniprotSummary", function(x,y) {
 setMethod("getUniprotSummary","gene", function(x,y){
     cols = strsplit(y@col,",")
     #q = sprintf("%s?query=%s+%s&columns=%s",y@uniprotbase,y@gene,y@uniprotquery,gsub(" ","%20",gsub(", ",",",y@col)))
-    q = sprintf("%s?query=%s+%s&columns=%s",y@uniprotbase,y@gene,y@uniprotquery,gsub(" ","%20",gsub(", ",",",toString(cols[[1]]))))
+    q = sprintf("%s?query=%s+%s&columns=%s",y@uniprotbase,x@name,y@uniprotquery,gsub(" ","%20",gsub(", ",",",toString(cols[[1]]))))
     #print(q)
     r = GET(q)
     s <- content(r,"text")
@@ -42,8 +42,10 @@ setMethod("getUniprotSummary","gene", function(x,y){
         #l <- strsplit(j[5]," ")[[1]]
         l <- strsplit(j[which(cols[[1]]=="genes")]," ")[[1]]
         if (y@gene %in% l || x@name %in% l){
+            #print(j[2])
             x@uniprot_summary = strsplit(j[which(cols[[1]]=="comment(FUNCTION)")],"FUNCTION: ")[[1]]
             x@uniprot_protein_name = j[which(cols[[1]]=="protein names")]
+            #print(j[which(cols[[1]]=="protein names")])
             x@uniprot_organism =  j[which(cols[[1]]=="organism")]
             x@uniprot_length =  j[which(cols[[1]]=="length")]
             x@uniprot_name = j[which(cols[[1]]=="genes")]

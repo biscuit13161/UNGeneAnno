@@ -25,3 +25,17 @@ test_that("Gets from NCBI gene database",{
 #  expect_equal_to_reference(g,"ncbi_test_gene.rds")
   expect_equal(g@symbol,"BRAF")
 })
+
+test_that("Check fails on not found",{
+  #  testthat::skip("NCBI gene skip")
+  testthat::skip_on_cran()
+  f <- query()
+  f@gene <- "AK298142"
+  query <- sprintf("Homo+sapiens[organism]+AND+%s[gene+name]+AND+alive[prop]",f@gene)
+  f <- getNihQuery(f,"gene",query)
+  expect_equal(f@notfound,"AK298142[gene name]")
+  query <- sprintf("Homo+sapiens[organism]+AND+%s+AND+alive[prop]",f@gene)
+  f <- getNihQuery(f,"gene",query)
+  g <- getNihSummary(gene(),f)
+  expect_equal(g@symbol,"ATIC")
+})

@@ -48,11 +48,12 @@ setMethod("getGeneSummary","geneanno",
             else{
                 f <- query()
                 f@gene <- gene
-                query <- sprintf("Homo+sapiens[organism]+%s[gene+name]+alive[prop]",gene)
+                #query <- sprintf("Homo+sapiens[organism]+%s[gene+name]+alive[prop]",gene)
+                query <- sprintf("Homo+sapiens[organism]+AND+%s+AND+alive[prop]",gene)
                 f <- getNihQuery(f,"gene",query)
                 cat(count, gene, " step 1..." )
-                g <- gene()
-                g <- getNihSummary(g,f)
+                #g <- gene()
+                g <- getNihSummary(gene(),f)
                 cat(" 2..." )
                 g <- getUniprotSummary(g,f)
                 cat("downloaded\n" )

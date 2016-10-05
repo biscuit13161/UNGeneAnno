@@ -39,6 +39,9 @@ setMethod("getNihQuery","query", function(x,db,query){
     r = xmlParse(GET(q))
     x@webenv = xmlToList(r)$WebEnv
     x@querykey = xmlToList(r)$QueryKey
+    if (!is.null(xmlToList(r)$ErrorList$PhraseNotFound)){
+      x@notfound = xmlToList(r)$ErrorList$PhraseNotFound
+    }
     return(x)
     }
 )
