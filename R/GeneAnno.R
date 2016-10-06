@@ -47,9 +47,9 @@ setMethod("getGeneSummary","geneanno",
             }
             else{
                 f <- query()
-                f@gene <- gene
+                f@query <- gene
                 #query <- sprintf("Homo+sapiens[organism]+%s[gene+name]+alive[prop]",gene)
-                query <- sprintf("Homo+sapiens[organism]+AND+%s+AND+alive[prop]",gene)
+                query <- sprintf("Homo+sapiens[organism]+AND+(%s[Gene%%2FProtein+Name]+OR+%s[Nucleotide%%2FProtein+Accession])+AND+alive[prop]",f@query,f@query)
                 f <- getNihQuery(f,"gene",query)
                 cat(count, gene, " step 1..." )
                 #g <- gene()

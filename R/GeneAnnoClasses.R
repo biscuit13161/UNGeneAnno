@@ -24,7 +24,6 @@ geneanno <- setClass("geneanno",
         ids="vector",
         uniprotbase = "character",
         uniprotquery="character",
-        uniprotcolumns="character",
         genelist="vector",
         fileroot="character",
         outputstem="character",
@@ -33,7 +32,6 @@ geneanno <- setClass("geneanno",
     prototype=list(
                 nihbase = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
                 uniprotquery = "AND+reviewed:yes+AND+organism:9606&format=tab",
-                uniprotcolumns = "columns=id,entry%20name,reviewed,protein%20names,genes,organism,length,comment(FUNCTION)",
                 uniprotbase = "http://www.uniprot.org/uniprot/",
                 outputstem = "gene_annotations",
                 genefilestem = "genes",
@@ -57,11 +55,12 @@ query <- setClass("query",
         webenv="character",
         querykey="character",
         gene="character",
+        query="character",
         notfound = "character",
-        col="character"
+        columns="character"
     ),
     prototype=list(
-      col="id,entry name,reviewed,protein names,genes,organism,length,comment(FUNCTION)"
+      columns="id,entry name,reviewed,protein names,genes,organism,database(EMBL),length,comment(FUNCTION)"
     )
 )
 
@@ -121,6 +120,7 @@ pubmed <- setClass("pubmed",
 gene <- setClass("gene",
     slots=list(
       name = "character",
+      query = "character",
       nih_id = "numeric",
       nih_summary = "character",
       uniprot_name = "vector",

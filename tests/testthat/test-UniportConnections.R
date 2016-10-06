@@ -2,17 +2,32 @@ library(ungeneanno)
 
 context("Test Uniprot connections")
 
-test_that("Gets from Uniprot database",{
+test_that("Gets Gene from Uniprot database",{
   #  testthat::skip("Uniprot gene skip")
   testthat::skip_on_cran()
   f <- query()
-  f@gene <- "BRAF"
+  f@query <- "BRAF"
   g <- gene()
-  g@name <- f@gene
-#  query <- sprintf("Homo+sapiens[organism]+%s[gene+name]+alive[prop]",f@gene)
+  g@query <- f@query
   p <- getUniprotSummary(g,f)
-#  expect_equal_to_reference(p,"uniprot_test_gene.rds")
-  expect_equal(p@uniprot_name,"BRAF BRAF1 RAFB1")
+  expect_match(p@uniprot_name,f@query)
   expect_equal(p@uniprot_length,"766")
-  expect_equal(p@uniprot_organism,"Homo sapiens (Human)")
+  expect_match(p@uniprot_organism,"Human")
+})
+
+test_that("Gets Accession from Uniprot database",{
+  #  testthat::skip("Uniprot gene skip")
+  testthat::skip_on_cran()
+  f <- query()
+  f@query <- "AK298142"
+  g <- gene()
+  g@query <- f@query
+  #  query <- sprintf("Homo+sapiens[organism]+%s[gene+name]+alive[prop]",f@gene)
+  p <- getUniprotSummary(g,f)
+  expect_equal(p@uniprot_name,logical(0))
+  f@uniprotquery<- "AND+organism:9606&format=tab"
+  p <- getUniprotSummary(g,f)
+  expect_match(p@uniprot_protein_name,"PURH")
+  expect_equal(p@uniprot_length,"533")
+  #expect_match(p@uniprot_organism,"Human")
 })

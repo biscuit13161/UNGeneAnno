@@ -77,6 +77,7 @@ setMethod("getNihSummary","gene", function(x,y){
     q = sprintf("%sesummary.fcgi?db=%s&query_key=%s&WebEnv=%s",y@nihbase,y@db,y@querykey,y@webenv)
     r = xmlParse(GET(q))
     s <-xmlToList(r)
+    x@query <- y@query
     x@name = s$DocumentSummarySet$DocumentSummary$Name
     if (is.character(s$DocumentSummarySet$DocumentSummary$Summary)) {
         x@nih_summary = s$DocumentSummarySet$DocumentSummary$Summary

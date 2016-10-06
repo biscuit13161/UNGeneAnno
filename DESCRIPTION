@@ -1,7 +1,7 @@
 Package: ungeneanno
 Type: Package
 Title: Collate Gene Annotation Data from Uniprot and NIH Gene Databases
-Version: 0.1.6.9001
+Version: 0.1.6.9002
 Authors@R: person(c("I.","Richard"),"Thompson",email="ithompson@qf.org.qa",role=c("aut","cre"))
 Description: Taking a list of genes, the package collates together the summary
     information about those genes from the publicly available resources at Uniprot
