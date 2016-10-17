@@ -4,9 +4,9 @@ author: "Richard Thompson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{UNGeneAnno: PubMed Journal Query example}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+    %\VignetteIndexEntry{UNGeneAnno: PubMed Journal Query example}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 ---
 
 UNGeneAnno is written to enable the rapid collation of gene details from publicly available databases, initially those being the NCBI gene and Uniprot databases. 
@@ -24,13 +24,13 @@ In addition to it's core function the package also incorporates a function to ac
 Alternatively, the `searchPublications` function wraps `getPublicationList` such that a simple matrix can be used to return a matrix containing the results of multiple searches
 
     matrix <- matrix(c("Axitinib","BRAF","Imatinib","BRAF","Axitinib","PTEN","Imatinib","SMURF2")
-      ,ncol=2,byrow=TRUE)
+        ,ncol=2,byrow=TRUE)
     publicationmatrix <- searchPublications(matrix)
     
 `getPublicationList` returns a list containing `pubmed` class objects having specific slots for Pubmed ID, Author list, Title, Journal Name, Volume, Issue, Page Numbers and DOI. `searchPublications` returns a 2 column matrix where each row contains the search term and the list of `pubmed` objects.
 Individual publications can be accessed by index, for example, to get the Pubmed IDs of the returned publications:
 
     for (i in 1:length(ReturnedPublications)){
-      print(ReturnedPublications[[i]]@Id)
+        print(slot(ReturnedPublications[[i]],"Id"))
     }
 

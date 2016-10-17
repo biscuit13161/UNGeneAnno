@@ -16,24 +16,30 @@ getUniqueGeneList(x, inputlist)
 \arguments{
 \item{x}{object of class geneanno.}
 
-\item{inputlist}{vector of strings, being a mixed list of group numbers and gene names}
+\item{inputlist}{vector of strings, being a mixed list of group numbers and
+gene names}
 }
 \value{
-object of type geneanno; a copy of input object having the additional list of group numbers and a list of genes from \code{uniquelist}
+object of type geneanno; a copy of input object having the additional
+list of group numbers and a list of genes from \code{uniquelist}
 }
 \description{
-\code{getUniqueGeneList} takes a 2-column matrix of group identifiers and gene names, returning the seperated list of unique group identifiers and a unique list of genes.
+\code{getUniqueGeneList} takes a 2-column matrix of group identifiers and
+gene names, returning the seperated list of unique group identifiers and a
+unique list of genes.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{x = geneanno,inputlist = character}: object of type geneanno; a copy of input object having the additional list of group numbers and a unique list of genes from \code{s}
+\item \code{x = geneanno,inputlist = character}: object of type geneanno; a copy of input object
+having the additional list of group numbers and a unique list of genes from
+\code{s}
 
-\item \code{x = geneanno,inputlist = matrix}: object of type geneanno; a copy of input object having the additional list of group numbers and a unique list of genes from \code{s}
+\item \code{x = geneanno,inputlist = matrix}: object of type geneanno; a copy of input object
+having the additional list of group numbers and a unique list of genes from
+\code{s}
 }}
 \examples{
-\dontrun{
 data("genematrix")
-ga <- getUniqueGeneList(ga,genematrix)
-}
+ga <- getUniqueGeneList(geneanno(),mygenematrix)
 }
 

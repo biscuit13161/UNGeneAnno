@@ -26,9 +26,7 @@ given the nature of the search it is best to ensure the groups have meaningful n
 \item \code{matrix}: as above.
 }}
 \examples{
-\dontrun{
-query   f <- matrix(c("Axitinib","BRAF","Imatinib","BRAF"),ncol=2,byrow=TRUE)
+query <- matrix(c("Axitinib","BRAF","Imatinib","BRAF"),ncol=2,byrow=TRUE)
 ReturnedPublications <- searchPublications(query)
-}
 }
 

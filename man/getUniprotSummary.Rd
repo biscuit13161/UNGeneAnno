@@ -27,13 +27,11 @@ The query currently returns id, entry name, reviewed, protein names, genes, orga
 \item \code{gene}: \code{gene} object - a copy of the input object 'y', having the uniprot data added.
 }}
 \examples{
-\dontrun{
 f <- query()
-f@gene <- "BRAF"
+slot(f,"query") <- "BRAF"
 gene <- gene()
-gene@name <- f@gene
+slot(gene,"query") <- slot(f,"query")
 gene <- getUniprotSummary(gene,f)
-}
 }
 \seealso{
 \url{http://www.uniprot.org/help/uniprotkb_column_names}

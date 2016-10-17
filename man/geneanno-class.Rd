@@ -33,4 +33,7 @@ An S4 class to represent the base information used by the methods.
 
 \item{\code{groupnos}}{A numeric vector representing the identifiers of groups in the input file/list.}
 }}
+\examples{
+g <- geneanno()
+}
 

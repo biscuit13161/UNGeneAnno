@@ -4,7 +4,8 @@
 \name{parseInputFile}
 \alias{parseInputFile}
 \alias{parseInputFile,geneanno-method}
-\title{Parse files of gene names and group identifiers to create unique lists of each}
+\title{Parse files of gene names and group identifiers to create unique lists of
+each}
 \usage{
 parseInputFile(x, file)
 
@@ -19,7 +20,9 @@ parseInputFile(x, file)
 vector of character strings, as exemplified by the inputlist data object.
 }
 \description{
-\code{parseInputFile} takes a mixed file containing group identifiers (numeric) and gene names, returning the list of group identifiers and genes with the remaining columns removed.
+\code{parseInputFile} takes a mixed file containing group identifiers
+(numeric) and gene names, returning the list of group identifiers and genes
+with the remaining columns removed.
 The package was originally written to work from a file laid out thus:
 group_id1
 gene_name1
@@ -27,11 +30,21 @@ gene_name2
 group_id2
 gene_name1
 gene_name3
-The methods assume that both group identifiers and gene names are alphanumeric; the group identifiers, where present, begining with a number and gene names starting with a character.
-please note, this populates the vector with only the alphanumric strings begining each line of the input file. Also, RNA genes (begining ENSG000) are excluded.
+The methods assume that both group identifiers and gene names are
+alphanumeric; the group identifiers, where present, begining with a number
+and gene names starting with a character.
+please note, this populates the vector with only the alphanumric strings
+beginning each line of the input file. Also, RNA genes (begining ENSG000)
+are currently excluded.
 }
 \section{Methods (by class)}{
 \itemize{
 \item \code{geneanno}: vector of character strings
 }}
+\examples{
+data("inputlist")
+write(myinputlist,file="inputlist.txt")
+x <- geneanno()
+x <- parseInputFile(x,"inputlist.txt")
+}
 

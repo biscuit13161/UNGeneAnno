@@ -14,27 +14,36 @@ getGeneSummary(x)
 \item{x}{object of class \code{geneanno}.}
 }
 \value{
-vector of \code{gene} objects, each containing the collated data from the public resources.
+vector of \code{gene} objects, each containing the collated data
+from the public resources.
 }
 \description{
-\code{getGeneSummary} populates and returns a vector of \code{gene} objects with information sourced from  a series of html requests to the NIH and Uniport publicly available databases.
+\code{getGeneSummary} populates and returns a vector of \code{gene} objects
+with information sourced from  a series of html requests to the NIH and
+Uniport publicly available databases.
 }
 \details{
-Information returned from a database requests is parsed into a \code{gene} object, which are saved in a 'genes' subdirectory of the working directory.
-Each \code{gene} object is added to a vector of objects, which is then returned.
-Where gene information has previously been downloaded and objects saved (within the last seven days), \code{gene} objects are repopulated from the saved files so as to minimise server traffic.
-\emph{N.B.} the function includes a random wait (of up to 5s) between each gene downloaded.
+Information returned from a database requests is parsed into a \code{gene}
+object, which are saved in a 'genes' subdirectory of the working directory.
+Each \code{gene} object is added to a vector of objects, which is then
+returned.
+Where gene information has previously been downloaded and objects saved
+(within the last seven days), \code{gene} objects are repopulated from the
+saved files so as to minimise server traffic.
+\emph{N.B.} the function includes a random wait (of up to 5s) between each
+gene downloaded.
 
-\emph{N.B.} It is possible to define an alternative directory using \code{geneanno@fileroot <- "/path/to/directory"}
+\emph{N.B.} It is possible to define an alternative directory using
+\code{slot(geneanno,"fileroot") <- "/path/to/directory"}
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{geneanno}: Produces a vector of \code{gene} objects, each containing the collated data from the public resources.
+\item \code{geneanno}: Produces a vector of \code{gene} objects, each
+containing the collated data from the public resources.
 }}
 \examples{
-\dontrun{
-geneanno@fileroot <- "~/Desktop"
-genesummaries <- getGeneSummary(geneanno)
-}
+query <- matrix(c("Axitinib","BRAF","Imatinib","BRAF"),ncol=2,byrow=TRUE)
+g <- getUniqueGeneList(geneanno(),query)
+gs <- getGeneSummary(g)
 }
 

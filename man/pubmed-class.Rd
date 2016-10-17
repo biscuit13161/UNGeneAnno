@@ -29,4 +29,7 @@ An S4 class to represent a query to the Pubmed database, inherits from \code{gen
 
 \item{\code{DOI}}{The unique article Digital Object Identifier (DOI, see www.doi.org)}
 }}
+\examples{
+g <- pubmed()
+}
 

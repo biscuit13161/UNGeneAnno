@@ -31,13 +31,10 @@ is then used in the second stage to fetch the results of the query.
 \item \code{query}: \code{query} object a copy of the input object 'x', having the query specifiers from NIH added.
 }}
 \examples{
-\dontrun{
 f <- query()
-f@gene <- "BRAF"
+slot(f,"gene") <- "BRAF"
 db <- "gene"
-f <- getNihQuery(f,db,f@gene)
-gene <- getNihSummary(gene(),f)
-}
+f <- getNihQuery(f,db,slot(f,"gene"))
 }
 \seealso{
 \url{http://www.ncbi.nlm.nih.gov/books/NBK25500/}

@@ -7,28 +7,43 @@
 \alias{produceOutputFiles,geneanno,vector,vector,vector-method}
 \title{Save Gene Information to group Specific Output Files}
 \usage{
-produceOutputFiles(x, dgl, gs, pub)
+produceOutputFiles(x, ggl, gs, pub)
 
-\S4method{produceOutputFiles}{geneanno,vector,vector,missing}(x, dgl, gs)
+\S4method{produceOutputFiles}{geneanno,vector,vector,missing}(x, ggl, gs)
 
-\S4method{produceOutputFiles}{geneanno,vector,vector,vector}(x, dgl, gs, pub)
+\S4method{produceOutputFiles}{geneanno,vector,vector,vector}(x, ggl, gs, pub)
 }
 \arguments{
 \item{x}{object of class geneanno.}
 
-\item{dgl}{a Vector of group specific vectors relating the list of genes to the groups, as in the input file}
+\item{ggl}{a Vector of group specific vectors relating the list of genes to
+the groups, as in the input file}
 
-\item{gs}{Vector of Gene Summary information downloaded from NIH and Uniprot databases, typically output by getGeneSummary}
+\item{gs}{Vector of Gene Summary information downloaded from NIH and Uniprot
+databases, typically output by getGeneSummary}
 
-\item{pub}{Matrix containing journal article information from the PubMed resource, as retruned by the \code{searchPublications} function}
+\item{pub}{Matrix containing journal article information from the PubMed
+resource, as retruned by the \code{searchPublications} function}
+}
+\value{
+This function has no return value as outputs directly to file.
 }
 \description{
-\code{produceOutputFiles} saves the downloaded gene summary information into group specific files.
+\code{produceOutputFiles} saves the downloaded gene summary information into
+group specific files.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{x = geneanno,dgl = vector,gs = vector,pub = missing}: Save object data to text files.
+\item \code{x = geneanno,ggl = vector,gs = vector,pub = missing}: Save object data to text files.
 
-\item \code{x = geneanno,dgl = vector,gs = vector,pub = vector}: Save object data, including journal articles, to text files.
+\item \code{x = geneanno,ggl = vector,gs = vector,pub = vector}: Save object data, including journal articles,
+to text files.
 }}
+\examples{
+data("genematrix")
+data("genesummary")
+ggl <- getGroupGeneList(mygeneanno,mygenematrix)
+data("publications")
+produceOutputFiles(mygeneanno,ggl,mygenesummaries,mypublications)
+}
 

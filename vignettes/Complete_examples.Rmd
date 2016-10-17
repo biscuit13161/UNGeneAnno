@@ -4,9 +4,9 @@ author: "Richard Thompson"
 date: '`r Sys.Date()`'
 output:  rmarkdown::html_vignette
 vignette: |
-  %\VignetteIndexEntry{UNGeneAnno: Complete example} 
-  %\VignetteEngine{knitr::rmarkdown} 
-  %\VignetteEncoding{UTF-8}
+    %\VignetteIndexEntry{UNGeneAnno: Complete example} 
+    %\VignetteEngine{knitr::rmarkdown} 
+    %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, echo = FALSE, message = FALSE}
@@ -24,9 +24,9 @@ Further to the original aim, the package also includes the `getPublicationList` 
 A typical workflow begins with a matrix, wherein the first column represents a group identifier, `numeric` or `character`, and the second, gene names. The gene names, may include descriptive elements
 
 ```{r}
-  f <- matrix(c("1","BRAF.exp","1","BRCA2.mut","2","BRAF.cnv","2","AURKB.mut","2","PTEN.exp")
-              ,ncol=2,byrow=TRUE)
-  f
+    mat <- matrix(c("1","BRAF.exp","1","BRCA2.mut","2","BRAF.cnv","2","AURKB.mut","2","PTEN.exp")
+        ,ncol = 2,byrow = TRUE)
+    mat
 ```
 
 The `getuniquegenelist` function parses second column of the input matrix into a vector of character strings containing only the initial alphanumeric characters, so the above is treat as:
@@ -40,9 +40,9 @@ The `getuniquegenelist` function parses second column of the input matrix into a
 once the matrix is passed to `getuniquegenelist`, A geneanno object is populated with unique lists of both the group identifiers and gene names:
 
 ```{r}
-   geneanno <- getUniqueGeneList(geneanno(),f)
-   geneanno@genelist
-   geneanno@groupnos
+    geneanno <- getUniqueGeneList(geneanno(),mat)
+    slot(geneanno,"genelist")
+    slot(geneanno,"groupnos")
 ```
 
 *Nota Bene* The `getuniquegenelist` function assumes that all supplied gene names are alphanumeric and anything following is descriptive; therefore the function truncates contents of the second column to the initial alphanumeric characters only.
@@ -53,19 +53,19 @@ Once these lists have been populated, the summary information can be sourced fro
 
     genesummaries <- getGeneSummary(geneanno)
 
-Once the details have been downloaded, the gene object is saved to a subdirectory which defaults to "genes" and is created in the working directory; However the main directory and subdirectory can be amended using `geneanno@fileroot <- "/path/to/directory"` and  `geneanno@genefilestem <- "directory_name"`.
+Once the details have been downloaded, the gene object is saved to a subdirectory which defaults to "genes" and is created in the working directory; However the main directory and subdirectory can be amended using `slot(geneanno,"fileroot") <- "/path/to/directory"` and  `slot(geneanno,"genefilestem") <- "directory_name"`.
 Prior to downloading, the method will check the subdirectory for a saved gene object younger than seven days and preferentially use any saved objects it finds. 
 
 ## Producing Output Files
 The final task is to produce output files for each group identifier listing details of the genes related to it in the original input matrix.
 
-    groupgenelist <- getGroupGeneList(geneanno,matrix)
+    groupgenelist <- getGroupGeneList(geneanno,mat)
     produceOutputFiles(geneanno, groupgenelist, genesummaries)
 
 Optionally, the original matrix can be used to search the NCBI PubMed database and the returned article information incorporated into the output files. Theauthor would like to advise against using the `searchPublications` function unless the group identifiers are meaningful, for example if they are drug names. Further details can be found in the "[UNGeneAnno: PubMed Journal Query example](PubMed_Query_Example.html)" vignette.
 
-    publicationmatrix <- searchPublications(matrix)
+    publicationmatrix <- searchPublications(mat)
     produceOutputFiles(geneanno, groupgenelist, genesummaries, publicationmatrix)
 
-Output files are saved in a subdirectory, which defaults to "gene_annotations" of the `geneanno@fileroot` unless an alternative directory has been provided by `geneanno@outputstem <- "directory_name"`.
+Output files are saved in a subdirectory, which defaults to "gene_annotations" of the `slot(geneanno,"fileroot")` unless an alternative directory has been provided by `slot(geneanno,"outputstem") <- "directory_name"`.
 Currently, the files are created as plain text files, named as the group identifiers,  containing the appropriate details stored in the `gene` objects.

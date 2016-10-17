@@ -24,9 +24,7 @@ A vector of \code{pubmed} objects each detailing a publication relating to the e
 \item \code{character}: as above.
 }}
 \examples{
-\dontrun{
 query <- "Thompson IR HIV"
 ReturnedPublications <- getPublicationList(query)
-}
 }
 

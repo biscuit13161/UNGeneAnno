@@ -16,24 +16,29 @@ getGroupGeneList(x, inputlist)
 \arguments{
 \item{x}{object of class geneanno.}
 
-\item{inputlist}{vector of strings, being a mixed list of group numbers and gene names}
+\item{inputlist}{vector of strings, being a mixed list of group numbers and
+gene names}
 }
 \value{
-object of type geneanno; a copy of input object having the additional list of group numbers and a unique list of genes from \code{s}
+object of type geneanno; a copy of input object having the additional
+list of group numbers and a unique list of genes from \code{s}
 }
 \description{
-\code{getGroupGeneList} takes a mixed list of group identifiers (numeric) and gene names or a 2-column matrix of group identifiers and gene names, returning the seperated list of group identifiers and the related lists of genes.
+\code{getGroupGeneList} takes a mixed list of group identifiers (numeric) and
+gene names or a 2-column matrix of group identifiers and gene names,
+returning the seperated list of group identifiers and the related lists of
+genes.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{x = geneanno,inputlist = character}: uses vector of characters of group ids and Gene names for inputlist.
+\item \code{x = geneanno,inputlist = character}: uses vector of characters of group ids and Gene
+names for inputlist.
 
-\item \code{x = geneanno,inputlist = matrix}: uses matrix of group ids and Gene names for inputlist.
+\item \code{x = geneanno,inputlist = matrix}: uses matrix of group ids and Gene names for
+inputlist.
 }}
 \examples{
-\dontrun{
 data("genematrix")
-dgl <- getGroupGeneList(geneanno(),genematrix)
-}
+ggl <- getGroupGeneList(geneanno(),mygenematrix)
 }
 

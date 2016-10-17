@@ -12,7 +12,7 @@
 
 <meta name="author" content="Richard Thompson" />
 
-<meta name="date" content="2016-09-21" />
+<meta name="date" content="2016-10-16" />
 
 <title>UNGeneAnno: PubMed Journal Query example</title>
 
@@ -32,7 +32,7 @@
 
 <h1 class="title toc-ignore">UNGeneAnno: PubMed Journal Query example</h1>
 <h4 class="author"><em>Richard Thompson</em></h4>
-<h4 class="date"><em>2016-09-21</em></h4>
+<h4 class="date"><em>2016-10-16</em></h4>
 
 
 
@@ -46,11 +46,11 @@
 ReturnedPublications &lt;- getPublicationList(query)</code></pre>
 <p>Alternatively, the <code>searchPublications</code> function wraps <code>getPublicationList</code> such that a simple matrix can be used to return a matrix containing the results of multiple searches</p>
 <pre><code>matrix &lt;- matrix(c(&quot;Axitinib&quot;,&quot;BRAF&quot;,&quot;Imatinib&quot;,&quot;BRAF&quot;,&quot;Axitinib&quot;,&quot;PTEN&quot;,&quot;Imatinib&quot;,&quot;SMURF2&quot;)
-  ,ncol=2,byrow=TRUE)
+    ,ncol=2,byrow=TRUE)
 publicationmatrix &lt;- searchPublications(matrix)</code></pre>
 <p><code>getPublicationList</code> returns a list containing <code>pubmed</code> class objects having specific slots for Pubmed ID, Author list, Title, Journal Name, Volume, Issue, Page Numbers and DOI. <code>searchPublications</code> returns a 2 column matrix where each row contains the search term and the list of <code>pubmed</code> objects. Individual publications can be accessed by index, for example, to get the Pubmed IDs of the returned publications:</p>
 <pre><code>for (i in 1:length(ReturnedPublications)){
-  print(ReturnedPublications[[i]]@Id)
+    print(slot(ReturnedPublications[[i]],&quot;Id&quot;))
 }</code></pre>
 </div>
 

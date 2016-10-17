@@ -1,3 +1,11 @@
+UNGeneAnno v0.1.7
+=================
+
+Changes:
+
+* Expanded search functions to allow Accession Numbers to be used instead of Gene Names
+* Examples in documentation made runnable
+
 UNGeneAnno v0.1.6 (Release date: 2016-09-20)
 =================
 

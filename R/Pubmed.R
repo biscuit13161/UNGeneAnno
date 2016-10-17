@@ -12,45 +12,43 @@ library(methods)
 #' @importFrom XML xmlParse xpathApply xmlClone xmlValue getNodeSet
 #' @importFrom httr GET
 #' @examples
-#' \dontrun{
 #' query <- "Thompson IR HIV"
 #' ReturnedPublications <- getPublicationList(query)
-#' }
 #' @export
 #'
 setGeneric("getPublicationList", function(query) {
-  standardGeneric("getPublicationList")
+    standardGeneric("getPublicationList")
 })
 
 #' @describeIn getPublicationList as above.
 setMethod("getPublicationList","character", function(query){
-  y <- getNihQuery(query(),"pubmed",gsub(" ","+",query))
-  q = sprintf("%sesummary.fcgi?db=%s&query_key=%s&WebEnv=%s",y@nihbase,y@db,y@querykey,y@webenv)
-  print("Getting Results")
-  r = xmlParse(GET(q))
-  v = vector()
-  j <- getNodeSet(r,"//DocSum")
-  if (length(j) >0 ) {
-    for ( i in 1:length(j) ){
-      #print(i)
-      z <- pubmed()
-      z@Id <- unlist(xpathApply(xmlClone(j[[i]]),"//Id",xmlValue))
-      z@pmlink <- sprintf("https://www.ncbi.nlm.nih.gov/pubmed/?term=%s",z@Id)
-      z@pmclink <- sprintf("https://www.ncbi.nlm.nih.gov/pmc/articles/pmid/%s/",z@Id)
-      z@Journal <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='Source']",xmlValue))
-      z@Date <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='PubDate']",xmlValue))
-      z@Authors <- ifelse(xpathApply(xmlClone(j[[i]]),"//Item[@Name='AuthorList']",xmlValue) == "","",xpathApply(xmlClone(j[[i]]),"//Item[@Name='AuthorList']/Item[@Name='Author']",xmlValue) )
-      z@Title <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='Title']",xmlValue))
-      z@Volume <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='Volume']",xmlValue))
-      z@Issue <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='Issue']",xmlValue))
-      z@Pages <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='Pages']",xmlValue))
-      a <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='DOI']",xmlValue))
-      z@DOI <- ifelse(is.null(a),"",a)
-      z@DOILink <- ifelse(is.null(a),"",sprintf("https://dx.doi.org/%s",a))
-      v <- append(v,z)
+    y <- getNihQuery(query(),"pubmed",gsub(" ","+",query))
+    v = vector()
+    q = sprintf("%sesummary.fcgi?db=%s&query_key=%s&WebEnv=%s&retmax=10",y@nihbase,y@db,y@querykey,y@webenv)
+    print(sprintf("Getting Results: %s",query))
+    r = xmlParse(GET(q))
+    j <- getNodeSet(r,"//DocSum")
+    if (length(j) > 0 ) {
+        for (i in 1:length(j) ) {
+            #print(i)
+            z <- pubmed()
+            z@Id <- unlist(xpathApply(xmlClone(j[[i]]),"//Id",xmlValue))
+            z@pmlink <- sprintf("https://www.ncbi.nlm.nih.gov/pubmed/?term=%s",z@Id)
+            z@pmclink <- sprintf("https://www.ncbi.nlm.nih.gov/pmc/articles/pmid/%s/",z@Id)
+            z@Journal <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='Source']",xmlValue))
+            z@Date <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='PubDate']",xmlValue))
+            z@Authors <- ifelse(xpathApply(xmlClone(j[[i]]),"//Item[@Name='AuthorList']",xmlValue) == "","",xpathApply(xmlClone(j[[i]]),"//Item[@Name='AuthorList']/Item[@Name='Author']",xmlValue) )
+            z@Title <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='Title']",xmlValue))
+            z@Volume <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='Volume']",xmlValue))
+            z@Issue <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='Issue']",xmlValue))
+            z@Pages <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='Pages']",xmlValue))
+            a <- unlist(xpathApply(xmlClone(j[[i]]),"//Item[@Name='DOI']",xmlValue))
+            z@DOI <- ifelse(is.null(a),"",a)
+            z@DOILink <- ifelse(is.null(a),"",sprintf("https://dx.doi.org/%s",a))
+            v <- append(v,z)
+        }
     }
-  }
-  return(v)
+    return(v)
 }
 )
 
@@ -66,48 +64,47 @@ setMethod("getPublicationList","character", function(query){
 #' @return A 2 column matrix containg the query string and a list of \code{pubmed} objects each detailing a publication relating to the respective query.
 #' @importFrom methods setGeneric setMethod
 #' @examples
-#' \dontrun{
-#' query   f <- matrix(c("Axitinib","BRAF","Imatinib","BRAF"),ncol=2,byrow=TRUE)
+#' query <- matrix(c("Axitinib","BRAF","Imatinib","BRAF"),ncol=2,byrow=TRUE)
 #' ReturnedPublications <- searchPublications(query)
-#' }
 #' @export
 #'
 setGeneric("searchPublications", function(query) {
-  standardGeneric("searchPublications")
+    standardGeneric("searchPublications")
 })
 
 #' @describeIn searchPublications as above.
 setMethod("searchPublications","matrix",
-          function(query){
-            searchStrings <- createSearchString(query)
-            pub <- lapply(searchStrings[[2]], function(x) getPublicationList(x))
-            out <- cbind(searchStrings[[1]],pub)
-            return(out)
-          }
+    function(query){
+        searchStrings <- createSearchString(query)
+        pub <- lapply(searchStrings[[2]], function(x) getPublicationList(x))
+        out <- cbind(searchStrings[[1]],pub)
+        return(out)
+    }
 )
-#http://www.ncbi.nlm.nih.gov/pubmed?term=(BRAF%5BTitle%2FAbstract%5D)%20AND%20(%222014%22%5BDate%20-%20Publication%5D%20%3A%20%223000%22%5BDate%20-%20Publication%5D)
 
 
-# @describeIn createSearchString object of type geneanno; a copy of input object having the additional list of group numbers and a unique list of genes from \code{s}
+# @describeIn createSearchString - modify query string into search string
 
 setGeneric("createSearchString", function(query) {
   standardGeneric("createSearchString")
 })
 
 setMethod("createSearchString","character",
-          function(query){
-            query <- paste(query,collapse=" ")
-            query2 <- gsub(" ","%20",query,perl=TRUE)
-            return(list(query,query2))
-          }
+    function(query){
+        query <- paste(query,collapse = " ")
+        query2 <- gsub(" ","%20",query,perl = TRUE)
+        return(list(query,query2))
+    }
 )
 
 
 setMethod("createSearchString","matrix",
-          function(query){
-            query <- apply(query,1, function(x) paste(x,collapse=" ") )
-            query2 <- gsub(" ","%20",query,perl=TRUE)
-            return(list(query,query2))
-          }
+    function(query){
+        #query <- apply(query,1, function(x) paste(x,collapse = " ") )
+        query <-apply(query,1, function(x) ifelse(suppressWarnings(all(is.na(as.numeric(x[1])))),paste(x,collapse = " "),x[2] ))
+        query <- unique(query, 'rows')
+        query2 <- gsub(" ","%20",query,perl = TRUE)
+        return(list(query,query2))
+    }
 )
 

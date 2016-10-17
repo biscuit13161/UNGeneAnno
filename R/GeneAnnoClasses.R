@@ -16,28 +16,30 @@ library(methods)
 #' @slot genefilestem A character string stating the sub-directory of 'fileroot' into which gene objects are saved. (Default - "genes")
 #' @slot groupnos A numeric vector representing the identifiers of groups in the input file/list.
 #' @importFrom methods setClass new slot slotNames
+#' @examples
+#' g <- geneanno()
 #' @export geneanno
 geneanno <- setClass("geneanno",
-    slots= list(
-        db="character",
+    slots = list(
+        db = "character",
         nihbase = "character",
-        ids="vector",
+        ids = "vector",
         uniprotbase = "character",
-        uniprotquery="character",
-        genelist="vector",
-        fileroot="character",
-        outputstem="character",
-        genefilestem="character",
-        groupnos="vector"),
-    prototype=list(
-                nihbase = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
-                uniprotquery = "AND+reviewed:yes+AND+organism:9606&format=tab",
-                uniprotbase = "http://www.uniprot.org/uniprot/",
-                outputstem = "gene_annotations",
-                genefilestem = "genes",
-                ids  = vector("character"),
-                genelist  = vector("character"),
-                groupnos = vector("character")
+        uniprotquery = "character",
+        genelist = "vector",
+        fileroot = "character",
+        outputstem = "character",
+        genefilestem = "character",
+        groupnos = "vector"),
+    prototype = list(
+        nihbase = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
+        uniprotquery = "AND+reviewed:yes+AND+organism:9606&format=tab",
+        uniprotbase = "http://www.uniprot.org/uniprot/",
+        outputstem = "gene_annotations",
+        genefilestem = "genes",
+        ids  = vector("character"),
+        genelist  = vector("character"),
+        groupnos = vector("character")
     )
 
 )
@@ -48,19 +50,21 @@ geneanno <- setClass("geneanno",
 #' @slot querykey a character string identifier from the NCBI Eutils.
 #' @slot webenv A character string uniquely identifying the query from the NCBI Eutils.
 #' @importFrom methods setClass new slot slotNames
+#' @examples
+#' g <- query()
 #' @export query
 query <- setClass("query",
-    contains="geneanno",
-    slots=list(
-        webenv="character",
-        querykey="character",
-        gene="character",
-        query="character",
+    contains = "geneanno",
+    slots = list(
+        webenv = "character",
+        querykey = "character",
+        gene = "character",
+        query = "character",
         notfound = "character",
-        columns="character"
+        columns = "character"
     ),
-    prototype=list(
-      columns="id,entry name,reviewed,protein names,genes,organism,database(EMBL),length,comment(FUNCTION)"
+    prototype = list(
+        columns = "id,entry name,reviewed,protein names,genes,organism,database(EMBL),length,comment(FUNCTION)"
     )
 )
 
@@ -76,25 +80,27 @@ query <- setClass("query",
 #' @slot Pages The journal pages of the article
 #' @slot DOI The unique article Digital Object Identifier (DOI, see www.doi.org)
 #' @importFrom methods setClass new slot slotNames
+#' @examples
+#' g <- pubmed()
 #' @export pubmed
 pubmed <- setClass("pubmed",
-         slots=list(
-           Journal ="character",
-           Date ="character",
-           Title ="character",
-           Id ="character",
-           pmlink ="character",
-           pmclink ="character",
-           Authors = "vector",
-           Volume="character",
-           Issue ="character",
-           Pages ="character",
-           DOILink ="character",
-           DOI ="character"
-         ),
-         prototype=list(
-           Authors = vector("character")
-         )
+    slots = list(
+        Journal = "character",
+        Date = "character",
+        Title = "character",
+        Id = "character",
+        pmlink = "character",
+        pmclink = "character",
+        Authors = "vector",
+        Volume = "character",
+        Issue = "character",
+        Pages = "character",
+        DOILink = "character",
+        DOI = "character"
+    ),
+    prototype = list(
+        Authors = vector("character")
+    )
 )
 
 
@@ -116,27 +122,29 @@ pubmed <- setClass("pubmed",
 #' @slot map_location A character string representing the location of the gene on the karyotype (from NCBI).
 #' @slot direction A character string [forward/reverse] identifying the direction of the gene on the chromosome (from NCBI).
 #' @importFrom methods setClass new slot slotNames
+#' @examples
+#' g <- gene()
 #' @export gene
 gene <- setClass("gene",
-    slots=list(
-      name = "character",
-      query = "character",
-      nih_id = "numeric",
-      nih_summary = "character",
-      uniprot_name = "vector",
-      uniprot_protein_name = "character",
-      uniprot_summary = "vector",
-      uniprot_organism =  "character",
-      uniprot_length = "character",
-      alternatives = "vector",
-      symbol = "character",
-      chromosome = "character",
-      start = "character",
-      stop = "character",
-      exon_count = "character",
-      chraccver = "character",
-      map_location = "character",
-      direction = "character"
+    slots = list(
+        name = "character",
+        query = "character",
+        nih_id = "numeric",
+        nih_summary = "character",
+        uniprot_name = "vector",
+        uniprot_protein_name = "character",
+        uniprot_summary = "vector",
+        uniprot_organism =  "character",
+        uniprot_length = "character",
+        alternatives = "vector",
+        symbol = "character",
+        chromosome = "character",
+        start = "character",
+        stop = "character",
+        exon_count = "character",
+        chraccver = "character",
+        map_location = "character",
+        direction = "character"
     ),
     prototype = list(
         alternatives = vector("character"),

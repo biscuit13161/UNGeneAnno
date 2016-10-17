@@ -18,17 +18,14 @@ library(methods)
 #' @importFrom methods setGeneric setMethod
 #' @importFrom httr GET
 #' @examples
-#' \dontrun{
 #' f <- query()
-#' f@gene <- "BRAF"
+#' slot(f,"gene") <- "BRAF"
 #' db <- "gene"
-#' f <- getNihQuery(f,db,f@gene)
-#' gene <- getNihSummary(gene(),f)
-#' }
+#' f <- getNihQuery(f,db,slot(f,"gene"))
 #' @export
 #'
 setGeneric("getNihQuery", function(x,db,query) {
-  standardGeneric("getNihQuery")
+    standardGeneric("getNihQuery")
 })
 
 #' @describeIn getNihQuery \code{query} object a copy of the input object 'x', having the query specifiers from NIH added.
@@ -39,8 +36,8 @@ setMethod("getNihQuery","query", function(x,db,query){
     r = xmlParse(GET(q))
     x@webenv = xmlToList(r)$WebEnv
     x@querykey = xmlToList(r)$QueryKey
-    if (!is.null(xmlToList(r)$ErrorList$PhraseNotFound)){
-      x@notfound = xmlToList(r)$ErrorList$PhraseNotFound
+    if (!is.null(xmlToList(r)$ErrorList$PhraseNotFound)) {
+        x@notfound = xmlToList(r)$ErrorList$PhraseNotFound
     }
     return(x)
     }
@@ -59,31 +56,29 @@ setMethod("getNihQuery","query", function(x,db,query){
 #' @importFrom XML xmlParse xmlToList
 #' @importFrom httr GET
 #' @examples
-#' \dontrun{
 #' f <- query()
-#' f@gene <- "BRAF"
+#' slot(f,"gene") <- "BRAF"
 #' db <- "gene"
-#' f <- getNihQuery(f,db,f@gene)
+#' f <- getNihQuery(f,db,slot(f,"gene"))
 #' gene <- getNihSummary(gene(),f)
-#' }
 #' @export
 #'
 setGeneric("getNihSummary", function(x,y) {
-  standardGeneric("getNihSummary")
+    standardGeneric("getNihSummary")
 })
 
 #' @describeIn getNihSummary \code{gene} object a copy of the input object 'x', having the uniprot data added.
 setMethod("getNihSummary","gene", function(x,y){
     q = sprintf("%sesummary.fcgi?db=%s&query_key=%s&WebEnv=%s",y@nihbase,y@db,y@querykey,y@webenv)
     r = xmlParse(GET(q))
-    s <-xmlToList(r)
+    s <- xmlToList(r)
     x@query <- y@query
     x@name = s$DocumentSummarySet$DocumentSummary$Name
     if (is.character(s$DocumentSummarySet$DocumentSummary$Summary)) {
         x@nih_summary = s$DocumentSummarySet$DocumentSummary$Summary
     }
     x@symbol = s$DocumentSummarySet$DocumentSummary$NomenclatureSymbol
-    if (!is.null(s$DocumentSummarySet$DocumentSummary$OtherAliases)){
+    if (!is.null(s$DocumentSummarySet$DocumentSummary$OtherAliases)) {
         x@alternatives = s$DocumentSummarySet$DocumentSummary$OtherAliases
     }
     x@nih_id = as.integer(s$DocumentSummarySet$DocumentSummary$.attrs['uid'])
@@ -92,8 +87,8 @@ setMethod("getNihSummary","gene", function(x,y){
     x@stop = s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrStop
     x@exon_count = s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ExonCount
     x@chraccver = s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrAccVer
-    if (!is.null(s$DocumentSummarySet$DocumentSummary$map_location)){
-      x@map_location = s$DocumentSummarySet$DocumentSummary$map_location
+    if (!is.null(s$DocumentSummarySet$DocumentSummary$map_location)) {
+        x@map_location = s$DocumentSummarySet$DocumentSummary$map_location
     }
     x@direction = ifelse(s$DocumentSummarySet$DocumentSummary$ChrStart == s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrStart,"forward",ifelse(s$DocumentSummarySet$DocumentSummary$ChrStart == s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrStop,"reverse","NA"))
     return(x)
