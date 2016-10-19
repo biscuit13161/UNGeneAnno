@@ -72,26 +72,28 @@ setMethod("getNihSummary","gene", function(x,y){
     q = sprintf("%sesummary.fcgi?db=%s&query_key=%s&WebEnv=%s",y@nihbase,y@db,y@querykey,y@webenv)
     r = xmlParse(GET(q))
     s <- xmlToList(r)
-    x@query <- y@query
-    x@name = s$DocumentSummarySet$DocumentSummary$Name
-    if (is.character(s$DocumentSummarySet$DocumentSummary$Summary)) {
-        x@nih_summary = s$DocumentSummarySet$DocumentSummary$Summary
+    if (length(s$ERROR) == 0) {
+        x@query <- y@query
+        x@name = s$DocumentSummarySet$DocumentSummary$Name
+        if (is.character(s$DocumentSummarySet$DocumentSummary$Summary)) {
+            x@nih_summary = s$DocumentSummarySet$DocumentSummary$Summary
+        }
+        x@symbol = s$DocumentSummarySet$DocumentSummary$NomenclatureSymbol
+        if (!is.null(s$DocumentSummarySet$DocumentSummary$OtherAliases)) {
+            x@alternatives = s$DocumentSummarySet$DocumentSummary$OtherAliases
+        }
+        x@nih_id = as.integer(s$DocumentSummarySet$DocumentSummary$.attrs['uid'])
+        x@chromosome = s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrLoc
+        x@start = s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrStart
+        x@stop = s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrStop
+        x@exon_count = s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ExonCount
+        x@chraccver = s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrAccVer
+        if (!is.null(s$DocumentSummarySet$DocumentSummary$map_location)) {
+            x@map_location = s$DocumentSummarySet$DocumentSummary$map_location
+        }
+        x@direction = ifelse(s$DocumentSummarySet$DocumentSummary$ChrStart == s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrStart,"forward",ifelse(s$DocumentSummarySet$DocumentSummary$ChrStart == s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrStop,"reverse","NA"))
     }
-    x@symbol = s$DocumentSummarySet$DocumentSummary$NomenclatureSymbol
-    if (!is.null(s$DocumentSummarySet$DocumentSummary$OtherAliases)) {
-        x@alternatives = s$DocumentSummarySet$DocumentSummary$OtherAliases
-    }
-    x@nih_id = as.integer(s$DocumentSummarySet$DocumentSummary$.attrs['uid'])
-    x@chromosome = s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrLoc
-    x@start = s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrStart
-    x@stop = s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrStop
-    x@exon_count = s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ExonCount
-    x@chraccver = s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrAccVer
-    if (!is.null(s$DocumentSummarySet$DocumentSummary$map_location)) {
-        x@map_location = s$DocumentSummarySet$DocumentSummary$map_location
-    }
-    x@direction = ifelse(s$DocumentSummarySet$DocumentSummary$ChrStart == s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrStart,"forward",ifelse(s$DocumentSummarySet$DocumentSummary$ChrStart == s$DocumentSummarySet$DocumentSummary$GenomicInfo$GenomicInfoType$ChrStop,"reverse","NA"))
     return(x)
-    }
+}
 )
 

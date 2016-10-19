@@ -21,7 +21,7 @@ library(methods)
 #' @export
 #'
 setGeneric("getEnsembleList", function(query) {
-  standardGeneric("getEnsembleList")
+    standardGeneric("getEnsembleList")
 })
 
 #' @describeIn getEnsembleList as above.
@@ -37,7 +37,7 @@ setMethod("getEnsembleList","character", function(query) {
             }
         }
     )
-    return(ifelse(ret == "archived","archived",ret))
+    return(ret)
 }
 )
 
@@ -70,6 +70,6 @@ setMethod("checkEnsemblArchive","character", function(query) {
             }
         }
     )
-    return("archived")
+    return(ret)
 }
 )

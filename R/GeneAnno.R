@@ -28,10 +28,13 @@ source("R/GeneAnnoClasses.R")
 #' from the public resources.
 #' @importFrom methods setGeneric setMethod
 #' @importFrom stats runif
+#' @importFrom utils read.table write.table
 #' @examples
+# \dontrun{
 #' query <- matrix(c("Axitinib","BRAF","Imatinib","BRAF"),ncol=2,byrow=TRUE)
 #' g <- getUniqueGeneList(geneanno(),query)
 #' gs <- getGeneSummary(g)
+# }
 #' @export
 #'
 setGeneric("getGeneSummary", function(x) {
@@ -44,27 +47,40 @@ setMethod("getGeneSummary","geneanno",
     function(x){
         output = list()
         count = 0
+        archivedList = vector()
+        archListOld <- vector()
+        noret <- vector()
         fileroot <- ifelse(identical(x@fileroot,character(0)),getwd(),x@fileroot)
         if (!dir.exists(file.path(fileroot,x@genefilestem))) {
             dir.create(file.path(fileroot,x@genefilestem))
         }
+        archFile <- file.path(fileroot,slot(x,"genefilestem"),"archived.txt")
+        archList <- list()
+        if (file.exists(archFile)) {
+            archList <- read.table(archFile)
+        }
+        toMatch <- c('^ENSG', '^ENSP', '^ENST')
+        match <- paste(toMatch,collapse="|")
         for (gene in slot(x,"genelist")) {
             filename = file.path(fileroot,x@genefilestem,
                                 sprintf("%s.RData",gene))
             count = count + 1
-            if (file.exists(filename) && Sys.time() < (
-              file.info(filename)$mtime + 7*86400)) {
+            if (gene %in% unlist(archList)) {
+                cat(count, gene," is archived in Ensembl\n")
+                archListOld <- append(archListOld,gene)
+            } else if (file.exists(filename) && Sys.time() < (
+                file.info(filename)$mtime + 7*86400)) {
                 load(filename)
                 output[[gene]] <- g
                 cat(count, gene, "\n" )
-            }
-            else{
+            } else{
                 f <- query()
-                if (grepl('^ENSG',gene)) {
+                if (grepl(match,gene)) {
                     r <- getEnsembleList(gene)
-                    if (r == "archived") {
-                      cat(count, gene," is archived in Ensembl\n")
-                      next()
+                    if (length(r$display_name) == 0) {
+                        cat(count, gene," is archived in Ensembl\n")
+                        archivedList <- append(archivedList,gene)
+                        next()
                     } else {f@query <- r$display_name}
                 } else {
                     f@query <- gene
@@ -73,12 +89,22 @@ setMethod("getGeneSummary","geneanno",
                 f <- getNihQuery(f,"gene",query)
                 cat(count, gene, " step 1..." )
                 g <- getNihSummary(gene(),f)
-                cat(" 2..." )
-                g <- getUniprotSummary(g,f)
-                cat("downloaded\n" )
+                if (length(slot(g,"name")) == 0) {
+                    cat("nothing returned\n")
+                } else {
+                    cat(" 2..." )
+                    g <- getUniprotSummary(g,f)
+                    cat("downloaded\n" )
+                }
                 output[[gene]] <- g
                 save(g,file = filename)
                 Sys.sleep(runif(1)*5)
+            }
+        }
+        if (length(archivedList) >= 1 || length(archListOld) >= 1) {
+            cat("\nThe following Ensembl Ids are archived:",archivedList, archListOld,"\n\n")
+            if (length(archivedList) >= 1) {
+                write.table(archivedList,archFile,append = TRUE,row.names=FALSE,col.names=FALSE)
             }
         }
         return(output)
@@ -169,7 +195,7 @@ setMethod("getGroupGeneList",signature(x = "geneanno", inputlist = "character"),
         }
         for (i in inputlist) {
             if (grepl("^[A-Za-z]",i)) {
-              output[[group]] <- append(output[[group]],i)
+                output[[group]] <- append(output[[group]],i)
             } else if (grepl("^[0-9]+",i)) {
                 group <- i
             }
@@ -282,8 +308,7 @@ setGeneric("produceOutputFiles", function(x,ggl,gs,pub) {
 })
 
 #' @describeIn produceOutputFiles Save object data to text files.
-setMethod("produceOutputFiles",signature(x = "geneanno",ggl = "vector",
-                                         gs = "vector",pub = "missing"),
+setMethod("produceOutputFiles",signature(x = "geneanno",ggl = "vector", gs = "vector",pub = "missing"),
     function(x,ggl,gs){
         fileroot <- ifelse(identical(x@fileroot,character(0)),getwd(),x@fileroot)
             if (!dir.exists(file.path(fileroot,x@outputstem))) {
@@ -312,8 +337,7 @@ setMethod("produceOutputFiles",signature(x = "geneanno",ggl = "vector",
 
 #' @describeIn produceOutputFiles Save object data, including journal articles,
 #' to text files.
-setMethod("produceOutputFiles",signature(x = "geneanno",ggl = "vector",
-                                         gs = "vector",pub = "vector"),
+setMethod("produceOutputFiles",signature(x = "geneanno",ggl = "vector", gs = "vector",pub = "vector"),
     function(x,ggl,gs,pub) {
         fileroot <- ifelse(identical(x@fileroot,character(0)),getwd(),x@fileroot)
         if (!dir.exists(file.path(fileroot,x@outputstem))) {
@@ -328,8 +352,7 @@ setMethod("produceOutputFiles",signature(x = "geneanno",ggl = "vector",
                     for (j in slotNames(gs[[i]])) {
                         for (f in slot(gs[[i]],j)) {
                             if (!is.na(f) && !is.null(f) && f != "") {
-                                write(sprintf("\t%s: %s",toupper(j),f),
-                                      file = filename,append = TRUE)
+                                write(sprintf("\t%s: %s",toupper(j),f), file = filename,append = TRUE)
                             }
                         }
                     }
