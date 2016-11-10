@@ -32,7 +32,7 @@ geneanno <- setClass("geneanno",
         genefilestem = "character",
         groupnos = "vector"),
     prototype = list(
-        nihbase = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
+        nihbase = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
         uniprotquery = "AND+reviewed:yes+AND+organism:9606&format=tab",
         uniprotbase = "http://www.uniprot.org/uniprot/",
         outputstem = "gene_annotations",
