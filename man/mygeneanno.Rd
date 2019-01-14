@@ -15,4 +15,3 @@ A geneanno object.
 A \code{geneanno} object produced by \code{getUniqueGeneList()} and provided for testing downstream functionality.
 }
 \keyword{datasets}
-

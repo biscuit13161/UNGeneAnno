@@ -41,9 +41,9 @@ gene downloaded.
 \item \code{geneanno}: Produces a vector of \code{gene} objects, each
 containing the collated data from the public resources.
 }}
+
 \examples{
 query <- matrix(c("Axitinib","BRAF","Imatinib","BRAF"),ncol=2,byrow=TRUE)
 g <- getUniqueGeneList(geneanno(),query)
 gs <- getGeneSummary(g)
 }
-

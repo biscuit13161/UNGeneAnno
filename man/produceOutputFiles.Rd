@@ -11,7 +11,8 @@ produceOutputFiles(x, ggl, gs, pub)
 
 \S4method{produceOutputFiles}{geneanno,vector,vector,missing}(x, ggl, gs)
 
-\S4method{produceOutputFiles}{geneanno,vector,vector,vector}(x, ggl, gs, pub)
+\S4method{produceOutputFiles}{geneanno,vector,vector,vector}(x, ggl, gs,
+  pub)
 }
 \arguments{
 \item{x}{object of class geneanno.}
@@ -39,6 +40,7 @@ group specific files.
 \item \code{x = geneanno,ggl = vector,gs = vector,pub = vector}: Save object data, including journal articles,
 to text files.
 }}
+
 \examples{
 data("genematrix")
 data("genesummary")
@@ -46,4 +48,3 @@ ggl <- getGroupGeneList(mygeneanno,mygenematrix)
 data("publications")
 produceOutputFiles(mygeneanno,ggl,mygenesummaries,mypublications)
 }
-

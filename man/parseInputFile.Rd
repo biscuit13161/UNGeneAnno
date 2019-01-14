@@ -41,10 +41,10 @@ are currently excluded.
 \itemize{
 \item \code{geneanno}: vector of character strings
 }}
+
 \examples{
 data("inputlist")
 write(myinputlist,file="inputlist.txt")
 x <- geneanno()
 x <- parseInputFile(x,"inputlist.txt")
 }
-

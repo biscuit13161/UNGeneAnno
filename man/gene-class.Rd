@@ -2,8 +2,8 @@
 % Please edit documentation in R/GeneAnnoClasses.R
 \docType{class}
 \name{gene-class}
-\alias{gene}
 \alias{gene-class}
+\alias{gene}
 \title{An S4 class to represent a gene.}
 \description{
 An S4 class to represent a gene.
@@ -41,7 +41,7 @@ An S4 class to represent a gene.
 
 \item{\code{direction}}{A character string [forward/reverse] identifying the direction of the gene on the chromosome (from NCBI).}
 }}
+
 \examples{
 g <- gene()
 }
-

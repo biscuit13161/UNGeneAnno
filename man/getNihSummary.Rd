@@ -27,6 +27,7 @@ carries out the second stage in relation to the NCBI "gene" database, populating
 \itemize{
 \item \code{gene}: \code{gene} object a copy of the input object 'x', having the uniprot data added.
 }}
+
 \examples{
 f <- query()
 slot(f,"gene") <- "BRAF"
@@ -34,4 +35,3 @@ db <- "gene"
 f <- getNihQuery(f,db,slot(f,"gene"))
 gene <- getNihSummary(gene(),f)
 }
-

@@ -25,8 +25,8 @@ given the nature of the search it is best to ensure the groups have meaningful n
 \itemize{
 \item \code{matrix}: as above.
 }}
+
 \examples{
 query <- matrix(c("Axitinib","BRAF","Imatinib","BRAF"),ncol=2,byrow=TRUE)
 ReturnedPublications <- searchPublications(query)
 }
-

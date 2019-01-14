@@ -38,8 +38,8 @@ having the additional list of group numbers and a unique list of genes from
 having the additional list of group numbers and a unique list of genes from
 \code{s}
 }}
+
 \examples{
 data("genematrix")
 ga <- getUniqueGeneList(geneanno(),mygenematrix)
 }
-

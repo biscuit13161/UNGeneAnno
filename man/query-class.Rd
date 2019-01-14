@@ -2,8 +2,8 @@
 % Please edit documentation in R/GeneAnnoClasses.R
 \docType{class}
 \name{query-class}
-\alias{query}
 \alias{query-class}
+\alias{query}
 \title{An S4 class to represent an initial query to the NCBI e-utilities, inherits from \code{geneanno} class.}
 \description{
 An S4 class to represent an initial query to the NCBI e-utilities, inherits from \code{geneanno} class.
@@ -17,7 +17,7 @@ An S4 class to represent an initial query to the NCBI e-utilities, inherits from
 
 \item{\code{webenv}}{A character string uniquely identifying the query from the NCBI Eutils.}
 }}
+
 \examples{
 g <- query()
 }
-

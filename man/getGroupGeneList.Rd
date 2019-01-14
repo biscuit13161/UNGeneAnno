@@ -37,8 +37,8 @@ names for inputlist.
 \item \code{x = geneanno,inputlist = matrix}: uses matrix of group ids and Gene names for
 inputlist.
 }}
+
 \examples{
 data("genematrix")
 ggl <- getGroupGeneList(geneanno(),mygenematrix)
 }
-

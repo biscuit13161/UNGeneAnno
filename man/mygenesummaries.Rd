@@ -16,4 +16,3 @@ A mixed list of drug identifiers and gene names, based on the genematrix data, a
 and used for input into \code{getUniqueGeneList()}, \code{getGroupGeneList()} and \code{searchPublications()}
 }
 \keyword{datasets}
-

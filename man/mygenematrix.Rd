@@ -15,4 +15,3 @@ A 2 column matrix where the first columns contains drug identifiers and the seco
 A matrix made up of a column of drug identifiers and a column of associated gene names, as used for input into \code{getUniqueGeneList()} and
 }
 \keyword{datasets}
-

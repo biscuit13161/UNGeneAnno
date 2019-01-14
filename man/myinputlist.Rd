@@ -16,4 +16,3 @@ A mixed list of drug identifiers and gene names, as output by \code{parseInputFi
 and used for input into \code{getUniqueGeneList()}, \code{getGroupGeneList()} and \code{searchPublications()}
 }
 \keyword{datasets}
-

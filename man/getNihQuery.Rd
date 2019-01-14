@@ -30,6 +30,7 @@ is then used in the second stage to fetch the results of the query.
 \itemize{
 \item \code{query}: \code{query} object a copy of the input object 'x', having the query specifiers from NIH added.
 }}
+
 \examples{
 f <- query()
 slot(f,"gene") <- "BRAF"
@@ -39,4 +40,3 @@ f <- getNihQuery(f,db,slot(f,"gene"))
 \seealso{
 \url{http://www.ncbi.nlm.nih.gov/books/NBK25500/}
 }
-

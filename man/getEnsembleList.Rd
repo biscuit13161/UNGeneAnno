@@ -26,9 +26,9 @@ is called to check whether it is archived.
 \itemize{
 \item \code{character}: as above.
 }}
+
 \examples{
 query <- "ENSG00000157764"
 ret <- getEnsembleList(query)
 ret$display_name
 }
-

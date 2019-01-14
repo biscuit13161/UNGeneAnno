@@ -24,8 +24,8 @@ of an Ensembl ID in the archive database.
 \itemize{
 \item \code{character}: as above.
 }}
+
 \examples{
 query <- "ENSG00000121031"
 ret <- checkEnsemblArchive(query)
 }
-

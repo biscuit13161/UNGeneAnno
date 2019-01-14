@@ -23,8 +23,8 @@ A vector of \code{pubmed} objects each detailing a publication relating to the e
 \itemize{
 \item \code{character}: as above.
 }}
+
 \examples{
 query <- "Thompson IR HIV"
 ReturnedPublications <- getPublicationList(query)
 }
-

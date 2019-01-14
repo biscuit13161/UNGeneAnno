@@ -45,12 +45,11 @@ for (i in 1:length(ReturnedPublications)){
   }
 }
 }
-\author{
-Richard Thompson <ithompson@qf.org.qa>
-}
 \seealso{
 \url{http://www.ncbi.nlm.nih.gov/books/NBK25500/}
 
 \url{http://www.uniprot.org/help/uniprotkb_column_names}
 }
-
+\author{
+Richard Thompson <ithompson@qf.org.qa>
+}

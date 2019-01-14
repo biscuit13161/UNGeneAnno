@@ -15,4 +15,3 @@ A matrix of identifiers from mygenematrix/mygenelist and vectors of \code{pubmed
 A matrix containing the mygenematrix identifiers and  up to 10 related journal articles returned from \code{searchPublications()}
 }
 \keyword{datasets}
-

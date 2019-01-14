@@ -2,8 +2,8 @@
 % Please edit documentation in R/GeneAnnoClasses.R
 \docType{class}
 \name{pubmed-class}
-\alias{pubmed}
 \alias{pubmed-class}
+\alias{pubmed}
 \title{An S4 class to represent a query to the Pubmed database, inherits from \code{geneanno} class.}
 \description{
 An S4 class to represent a query to the Pubmed database, inherits from \code{geneanno} class.
@@ -29,7 +29,7 @@ An S4 class to represent a query to the Pubmed database, inherits from \code{gen
 
 \item{\code{DOI}}{The unique article Digital Object Identifier (DOI, see www.doi.org)}
 }}
+
 \examples{
 g <- pubmed()
 }
-
